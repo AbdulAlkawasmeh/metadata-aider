@@ -31,6 +31,8 @@ const loadResults = async () => {
 
 const drawChart = (mseValues: number[]) => {
     const canvas = document.getElementById('mseChart') as HTMLCanvasElement;
+    canvas.width = 1200; // Set canvas width
+    canvas.height = 400; // Set canvas height
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -42,22 +44,29 @@ const drawChart = (mseValues: number[]) => {
     const width = canvas.width - padding * 2;
     const height = canvas.height - padding * 2;
 
-    const maxMSE = Math.max(...mseValues);
+    const maxMSE = Math.max(...mseValues) || 1; // Ensure maxMSE is at least 1 to avoid division by zero
     const scaleX = width / (mseValues.length - 1);
     const scaleY = height / maxMSE;
 
     // Draw axes and labels
     ctx.font = "16px Arial";
-    ctx.fillText("Epoch", canvas.width / 2 - padding, canvas.height - padding / 2);
+    // Draw axes and labels
+    ctx.font = "16px Arial";
+    ctx.fillText("Epoch", canvas.width / 2, canvas.height - padding / 2);
     ctx.save();
-    ctx.translate(0, canvas.height / 2);
+    ctx.translate(padding / 2, canvas.height / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText("MSE", -canvas.height / 2 - padding, padding / 2);
+    ctx.fillText("MSE", 0, 0);
     ctx.restore();
+
+    // Draw X and Y axes
     ctx.beginPath();
     ctx.moveTo(padding, height + padding);
     ctx.lineTo(padding, padding);
     ctx.lineTo(width + padding, height + padding);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+    ctx.stroke();
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
     ctx.stroke();
@@ -69,7 +78,7 @@ const drawChart = (mseValues: number[]) => {
 
     mseValues.forEach((value, i) => {
         const x = padding + i * scaleX;
-        const y = padding + (height - value * scaleY);
+        const y = height + padding - (value * scaleY); // Invert y-axis for canvas
 
         if (i === 0) {
             ctx.moveTo(x, y);

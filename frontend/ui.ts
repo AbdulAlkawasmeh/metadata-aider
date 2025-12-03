@@ -46,10 +46,17 @@ const drawChart = (mseValues: number[]) => {
     const scaleX = width / (mseValues.length - 1);
     const scaleY = height / maxMSE;
 
-    // Draw axes
+    // Draw axes and labels
+    ctx.font = "16px Arial";
+    ctx.fillText("Epoch", canvas.width / 2 - padding, canvas.height - padding / 2);
+    ctx.save();
+    ctx.translate(0, canvas.height / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText("MSE", -canvas.height / 2 - padding, padding / 2);
+    ctx.restore();
     ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, height + padding);
+    ctx.moveTo(padding, height + padding);
+    ctx.lineTo(padding, padding);
     ctx.lineTo(width + padding, height + padding);
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;

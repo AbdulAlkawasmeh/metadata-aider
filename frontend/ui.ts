@@ -78,11 +78,11 @@ const drawChart = (mseValues: number[]) => {
     ctx.font = "18px Arial";
 
     // X-axis label
-    ctx.fillText("Epoch", padding + width / 2 - 30, padding + height + 45);
+    ctx.fillText("Epoch", padding + width / 2 - 30, canvas.height - padding / 2);
 
     // Y-axis label (rotated)
     ctx.save();
-    ctx.translate(padding - 50, padding + height / 2);
+    ctx.translate(padding - 50, padding + height / 2 + 10); // Adjust Y position for better visibility
     ctx.rotate(-Math.PI / 2);
     ctx.fillText("MSE", 0, 0);
     ctx.restore();

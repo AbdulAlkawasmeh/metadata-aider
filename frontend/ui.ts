@@ -43,26 +43,25 @@ const drawChart = (mseValues: number[]) => {
         datasets: [{
             label: 'MSE over Epochs',
             data: mseValues,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-            fill: false
+            strokeStyle: 'rgba(75, 192, 192, 1)',
+            lineWidth: 2
         }]
     };
 
-    // Draw the line chart
+    // Draw the line chart manually
     if (ctx) {
-        new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height - mseValues[0]); // Start at the first point
+
+        mseValues.forEach((mse, index) => {
+            const x = (canvas.width / mseValues.length) * index;
+            const y = canvas.height - mse; // Invert y-axis for canvas
+            ctx.lineTo(x, y);
         });
+
+        ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
     }
 };
 

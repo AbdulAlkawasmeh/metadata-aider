@@ -1,12 +1,12 @@
 const loadResults = async () => {
     try {
-        const response = await fetch('results/results.json');
+        const response = await fetch('../results/results.json');
         const results = await response.json();
 
         const tableBody = document.querySelector('#resultsTable tbody');
-        tableBody.innerHTML = ''; // Clear existing table rows
+        tableBody.innerHTML = '';
 
-        let mseValues: number[] = [];
+        const mseValues: number[] = [];
 
         results.forEach((result: { epoch: number; mse: number; rmse: number; mae: number }) => {
             const row = document.createElement('tr');
@@ -17,52 +17,62 @@ const loadResults = async () => {
                 <td>${result.mae}</td>
             `;
             tableBody.appendChild(row);
+
             mseValues.push(result.mse);
         });
 
-        const finalMetrics = results[results.length - 1];
-        console.log(`Final Metrics: MSE=${finalMetrics.mse}, RMSE=${finalMetrics.rmse}, MAE=${finalMetrics.mae}`);
-
         drawChart(mseValues);
+
     } catch (error) {
         console.error('Error loading results:', error);
     }
 };
 
+
 const drawChart = (mseValues: number[]) => {
-    const chartDiv = document.getElementById('chart');
-    chartDiv.innerHTML = ''; // Clear existing chart
-
-    const canvas = document.createElement('canvas');
-    chartDiv.appendChild(canvas);
+    const canvas = document.getElementById('mseChart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    const labels = mseValues.map((_, index) => index + 1);
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'MSE over Epochs',
-            data: mseValues,
-            strokeStyle: 'rgba(75, 192, 192, 1)',
-            lineWidth: 2
-        }]
-    };
+    // Clear existing chart
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the line chart manually
-    if (ctx) {
-        ctx.beginPath();
-        ctx.moveTo(0, canvas.height - mseValues[0]); // Start at the first point
+    // Chart layout settings
+    const padding = 30;
+    const width = canvas.width - padding * 2;
+    const height = canvas.height - padding * 2;
 
-        mseValues.forEach((mse, index) => {
-            const x = (canvas.width / mseValues.length) * index;
-            const y = canvas.height - mse; // Invert y-axis for canvas
+    const maxMSE = Math.max(...mseValues);
+    const scaleX = width / (mseValues.length - 1);
+    const scaleY = height / maxMSE;
+
+    // Draw axes
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, height + padding);
+    ctx.lineTo(width + padding, height + padding);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Draw line plot
+    ctx.beginPath();
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+
+    mseValues.forEach((value, i) => {
+        const x = padding + i * scaleX;
+        const y = padding + (height - value * scaleY);
+
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
             ctx.lineTo(x, y);
-        });
+        }
+    });
 
-        ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-    }
+    ctx.stroke();
 };
+
 
 document.getElementById('loadResults')?.addEventListener('click', loadResults);

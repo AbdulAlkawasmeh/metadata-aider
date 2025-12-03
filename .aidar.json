@@ -1,0 +1,6 @@
+{
+    "project": {
+        "directory": "path/to/your/project",
+        "tracked_files": []
+    }
+}

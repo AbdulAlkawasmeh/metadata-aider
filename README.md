@@ -23,17 +23,20 @@ This project is designed to generate synthetic IoT data, train a simple machine 
 ## Installation
 
 1. Clone the repository.
+   ```bash
+   git clone https://github.com/AbdulAlkawasmeh/metadata-aider
+   cd metadata-aider
+   ```
+
+2. Create a venv and activate it
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
+
 2. Install the required Python packages:
    ```bash
    pip install -r requirements.txt
-   ```
-3. Install frontend tools
-   ```bash
-   npm install
-   ```
-4. Install TypeScript and ts-node globally:
-   ```bash
-   npm install -g typescript ts-node
    ```
 
 ## Usage
@@ -54,7 +57,7 @@ This project is designed to generate synthetic IoT data, train a simple machine 
 4. Load the frontend:
    ```bash
    cd frontend
-   python3 -m http.server 8081
+   python -m http.server 8081
    ```
    Open `http://localhost:8081/index.html` in a web browser to view the results.
 

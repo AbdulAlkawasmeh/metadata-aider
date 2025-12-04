@@ -1,0 +1,17 @@
+{
+    "name": "iot-frontend",
+    "version": "1.0.0",
+    "description": "UI for IoT model results",
+    "scripts": {
+      "build": "tsc",
+      "watch": "tsc --watch"
+    },
+    "dependencies": {
+      "chart.js": "^4.5.1"
+    },
+    "devDependencies": {
+      "typescript": "^5.9.3",
+      "@types/node": "^24.10.1"
+    }
+  }
+  

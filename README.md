@@ -52,7 +52,11 @@ This project is designed to generate synthetic IoT data, train a simple machine 
    Containing MSE, RMSE, and MAE per Epoch
 
 4. Load the frontend:
-   Open `frontend/index.html` in a web browser to view the results.
+   ```bash
+   cd frontend
+   python3 -m http.server 8081
+   ```
+   Open `http://localhost:8081/index.html` in a web browser to view the results.
 
 ## License
 

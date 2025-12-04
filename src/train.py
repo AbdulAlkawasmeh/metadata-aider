@@ -4,6 +4,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from dataset import load_data
 from model import SimpleModel
+import os
 
 def train_model():
     # Load the data
@@ -49,6 +50,7 @@ def train_model():
         print(f'Epoch {epoch + 1}: MSE={mse}, RMSE={rmse}, MAE={mae}')
 
     # Save results to JSON
+    os.makedirs("results", exist_ok=True)
     with open('results/results.json', 'w') as f:
         json.dump(results, f)
 

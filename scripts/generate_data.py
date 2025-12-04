@@ -1,5 +1,8 @@
 import numpy as np
 import pandas as pd
+import os
+
+os.makedirs("data", exist_ok=True)
 
 def generate_synthetic_data(num_rows=1000):
     # Generate random sensor data

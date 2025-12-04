@@ -15,9 +15,9 @@ This project is designed to generate synthetic IoT data, train a simple machine 
 - **frontend/**: Contains the TypeScript frontend for visualizing results.
   - **index.html**: The main HTML file for the frontend.
   - **ui.ts**: TypeScript file that loads results and draws the chart.
+  - **results/** – Stores `results.json` generated after training 
 
 - **data/**: Directory for storing generated data files.
-- **results/**: Directory for storing results from model training.
 - **.aidar.json**: Configuration file for tracking project files.
 
 ## Installation
@@ -27,7 +27,11 @@ This project is designed to generate synthetic IoT data, train a simple machine 
    ```bash
    pip install -r requirements.txt
    ```
-3. Install TypeScript and ts-node globally:
+3. Install frontend tools
+   ```bash
+   npm install
+   ```
+4. Install TypeScript and ts-node globally:
    ```bash
    npm install -g typescript ts-node
    ```
@@ -43,8 +47,11 @@ This project is designed to generate synthetic IoT data, train a simple machine 
    ```bash
    python src/train.py
    ```
+3. This produces:
+   `frontend/results/results.json`
+   Containing MSE, RMSE, and MAE per Epoch
 
-3. Load the frontend:
+4. Load the frontend:
    Open `frontend/index.html` in a web browser to view the results.
 
 ## License
